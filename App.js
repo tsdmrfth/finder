@@ -29,7 +29,7 @@ export default class App extends React.Component {
       });
 
     return (
-      <View style={styles.container}>
+      <View style={styles.containerViewStyle}>
           <Navigator/>
       </View>
     );
@@ -39,7 +39,7 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerViewStyle: {
     flex: 1,
     backgroundColor: '#fff',
   },
