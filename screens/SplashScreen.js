@@ -7,7 +7,7 @@ import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {Image, View} from "react-native";
+import {AsyncStorage, Image, View} from "react-native";
 import {checkFacebookToken} from '../actions';
 
 /**
@@ -28,20 +28,28 @@ const mainFlow = createBottomTabNavigator({
 class SplashScreen extends Component {
 
     componentWillMount() {
-        this.props.checkFacebookToken()
+        this.props.checkFacebookToken();
     }
 
     render() {
-
         const SignedFlow = createBottomTabNavigator({
             main: {screen: mainFlow}
-        });
+            },
+            {
+                lazy: true,
+            });
 
         const UnsignedFlow = createBottomTabNavigator({
             welcome: {screen: WelcomeScreen},
             auth: {screen: AuthScreen},
             main: {screen: mainFlow}
-        });
+            },
+            {
+                navigationOptions: {
+                    tabBarVisible: false,
+                },
+                lazy: true,
+            });
 
         if (this.props.loading){
             return this.renderSplashView()
@@ -63,6 +71,7 @@ class SplashScreen extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state);
     return {
         loading: state.auth.loading,
         hasToken: state.auth.hasToken

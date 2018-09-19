@@ -19,7 +19,6 @@ class WelcomeScreen extends Component {
     }
 
     onSlidesCompleted() {
-        console.log('hello');
         this.props.navigation.navigate('auth')
     }
 
