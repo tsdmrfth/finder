@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Dimensions, Image, ScrollView, Text, View} from "react-native";
+import {Dimensions, Image, ScrollView, Text, View} from "react-native";
 import PropTypes from 'prop-types';
 import isAndroid from "../utils/isAndroid";
 import Indicator from "./Indicator";
+import Button from "./Button";
+import strings from "../contants/strings";
 
 /**
  * Created by Fatih Taşdemir on 18.09.2018
@@ -57,19 +59,11 @@ class Slide extends Component {
 
     renderCompleteButton() {
         return (
-            <View style={{
-                backgroundColor: '#4dc8ff',
-                padding: 5,
-                paddingLeft: 10,
-                paddingRight: 10,
-                borderRadius: 10,
-                marginTop: 20
-            }}>
-
-                <Button title={'Lets Go'} onPress={this.props.onCompleteCallback} color={'white'}/>
-
-            </View>
-        );
+            <Button
+                onClick={this.props.onCompleteCallback}
+                buttonText={strings.letsGo}
+                buttonStyle={{marginTop: 20}}/>
+        )
     }
 
 }
@@ -92,7 +86,7 @@ const styles = {
         fontSize: 20,
         textAlign: 'center',
         marginTop: 20,
-        //fontFamily: isAndroid() ? 'Roboto' : 'Avenir-Medium'
+        fontFamily: isAndroid() ? 'Roboto' : 'Avenir-Medium'
     },
     indicatorContainerStyle: {
         position: 'absolute',
