@@ -37,7 +37,10 @@ class SplashScreen extends Component {
             },
             {
                 lazy: true,
-            });
+                navigationOptions: {
+                    tabBarVisible: false
+                }
+            },);
 
         const UnsignedFlow = createBottomTabNavigator({
             welcome: {screen: WelcomeScreen},
