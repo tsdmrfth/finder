@@ -92,7 +92,7 @@ const styles = {
         fontSize: 20,
         textAlign: 'center',
         marginTop: 20,
-        fontFamily: isAndroid() ? 'Roboto' : 'Avenir-Medium'
+        //fontFamily: isAndroid() ? 'Roboto' : 'Avenir-Medium'
     },
     indicatorContainerStyle: {
         position: 'absolute',

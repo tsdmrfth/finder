@@ -1,18 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import {Provider} from 'react-redux';
-import WelcomeScreen from "./screens/WelcomeScreen";
-import AuthScreen from "./screens/AuthScreen";
-import MapScreen from "./screens/MapScreen";
-import DeckScreen from "./screens/DeckScreen";
-import ReviewScreen from "./screens/ReviewScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-import store from "./store";
+import {store} from "./store";
+import SplashScreen from "./screens/SplashScreen";
 
 export default class App extends React.Component {
 
   render() {
+      /*
       const Navigator = createBottomTabNavigator({
           welcome: {screen: WelcomeScreen},
           auth: {screen: AuthScreen},
@@ -29,11 +24,12 @@ export default class App extends React.Component {
               })
           }
       });
+      */
 
     return (
         <Provider store={store}>
             <View style={styles.containerViewStyle}>
-                <Navigator/>
+                <SplashScreen/>
             </View>
         </Provider>
     );
