@@ -1,6 +1,5 @@
 import {AsyncStorage} from 'react-native';
 import {Facebook, Google} from 'expo';
-import firebase from 'firebase';
 import {
     CHECK_TOKEN_START,
     FACEBOOK_LOGIN_FAILED,
@@ -10,10 +9,15 @@ import {
     TOKEN_CHECKED
 } from "./types";
 import strings from "../contants/strings";
+import firebase from 'firebase';
+import axios from 'axios';
+import generatePassword from "../utils/generatePassword";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
  */
+
+const FACEBOOK_GRAPH_URL = `https://graph.facebook.com/me?access_token=`;
 
 export const checkAuthToken = () => async dispatch => {
     dispatch({
@@ -29,7 +33,7 @@ export const checkAuthToken = () => async dispatch => {
 export const loginWithFacebook = () => async dispatch => {
     try {
         let {type, token} = await Facebook.logInWithReadPermissionsAsync('300855640741130', {
-            permissions: ['public_profile']
+            permissions: ['public_profile', 'email']
         });
 
         if (type === 'cancel') {
@@ -39,6 +43,12 @@ export const loginWithFacebook = () => async dispatch => {
         }
 
         await saveTokenToStorage(token);
+        let response = await axios.get(`${FACEBOOK_GRAPH_URL}${token}&fields=name,last_name,picture.type(large),email`);
+
+        const {name, last_name, email} = response.data;
+        let photoUrl = response.data.picture.data.url;
+        console.log(photoUrl);
+        await saveUserToDatabase({name, surname: last_name , photoUrl, email });
         dispatch({
             type: FACEBOOK_LOGIN_SUCCESS,
         })
@@ -47,7 +57,7 @@ export const loginWithFacebook = () => async dispatch => {
     } catch (e) {
         dispatch({
             type: FACEBOOK_LOGIN_SUCCESS,
-        })
+        });
     }
 };
 
@@ -64,10 +74,12 @@ export const loginWithGoogle = () => async dispatch => {
             })
         } else {
             await saveTokenToStorage(result.accessToken);
+            const {givenName, familyName, email, photoUrl} = result.user;
+            await saveUserToDatabase({name: givenName, surname: familyName, email, photoUrl});
+
             dispatch({
                 type: LOGIN_GOOGLE_SUCCESS,
-                payload: result
-            })
+            });
         }
     } catch (e) {
         dispatch({
@@ -77,8 +89,20 @@ export const loginWithGoogle = () => async dispatch => {
 
 };
 
-const saveUserToDatabase = ({name, surname, email, photoUrl}) => {
-    firebase.auth().createUserWithEmailAndPassword()
+const saveUserToDatabase = async ({name, surname, email, photoUrl}) => {
+    try {
+        let create = await firebase.auth().createUserWithEmailAndPassword(email, generatePassword());
+        let userRef = await firebase.database().ref(`/users/${create.user.uid}`);
+        await userRef.set({
+            photoUrl,
+            name,
+            surname,
+            fullName: `${name} ${surname}`
+        })
+    } catch (e) {
+        console.log(e)
+    }
+
 };
 
 const saveTokenToStorage = async (token) => {
