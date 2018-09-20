@@ -1,12 +1,15 @@
 import {AsyncStorage} from 'react-native';
 import {Facebook} from 'expo';
-import {FACEBOOK_LOGIN_FAILED, FACEBOOK_LOGIN_SUCCESS, TOKEN_CHECKED} from "./types";
+import {FACEBOOK_LOGIN_FAILED, FACEBOOK_LOGIN_SUCCESS, TOKEN_CHECKED, CHECK_TOKEN_START} from "./types";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
  */
 
 export const checkFacebookToken = () => async dispatch => {
+    dispatch({
+       type: CHECK_TOKEN_START
+    });
     let facebookToken = await AsyncStorage.getItem('fb_token');
     setTimeout(()=> dispatch({
         type: TOKEN_CHECKED,

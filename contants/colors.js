@@ -5,4 +5,6 @@
 export default {
     loginPageInfoCardColor: 'rgb(246,246,246)',
     infoTextColor:'rgb(192, 212, 114)',
+    white: '#fff',
+    searchInputColor: '#4b6584',
 }

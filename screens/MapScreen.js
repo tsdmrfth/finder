@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {Animated, Dimensions, Keyboard, View} from 'react-native';
 import {MapView} from 'expo';
 import {connect} from 'react-redux';
 import {fetchJobs} from '../actions';
 import Button from "../components/Button";
 import colors from "../contants/colors";
 import strings from "../contants/strings";
+import Input from "../components/Input";
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const INITIAL_MARGIN = (SCREEN_WIDTH - SCREEN_WIDTH * 0.7) / 2;
 
 class MapScreen extends Component {
 
@@ -15,11 +19,39 @@ class MapScreen extends Component {
             latitude: 37,
             longitudeDelta: 0.04,
             latitudeDelta: 0.09
-        }
+        },
+        animation: new Animated.Value(INITIAL_MARGIN),
+        expanded: false,
     };
+
+    constructor() {
+        super();
+        this.searchInputMargin = new Animated.Value(INITIAL_MARGIN);
+    }
 
     render(){
         const {buttonStyle} = styles;
+        const inputContainerStyle = {
+            position: 'absolute',
+            top: 50,
+            left: this.searchInputMargin,
+            right: this.searchInputMargin,
+            backgroundColor: colors.searchInputColor + '70',
+            height: 40,
+            borderWidth: 2,
+            borderColor: colors.searchInputColor,
+            borderRadius: this.state.expanded ? 5 : 15,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+
+        const inputStyle = {
+            color: colors.white,
+            backgroundColor: 'transparent',
+            paddingLeft: 15,
+            paddingRight: 15,
+            alignSelf: 'stretch'
+        };
 
         return (
             <View style={{flex: 1}}>
@@ -27,6 +59,16 @@ class MapScreen extends Component {
                     style={{flex: 1}}
                     region={this.state.region}
                     onRegionChangeComplete={this.onRegionChangeComplete}/>
+
+                <Animated.View style={inputContainerStyle}>
+                    <Input
+                        onBlur={this.handleOnBlur}
+                        onFocus={this.handleOnFocus}
+                        placeholder={strings.searchBarPlaceholder}
+                        placeholderTextColor={colors.white}
+                        inputStyle={inputStyle}/>
+                </Animated.View>
+
                 <View>
                     <Button
                         onClick={this.onSetMyLocationButtonClicked}
@@ -38,12 +80,31 @@ class MapScreen extends Component {
     }
 
     onRegionChangeComplete = region => {
+        Keyboard.dismiss();
         this.setState({region});
         this.props.fetchJobs(region)
     };
 
     onSetMyLocationButtonClicked = () => {
+    };
 
+    handleOnFocus = () => {
+        this.toggleSearchBar()
+    };
+
+    handleOnBlur = () => {
+        this.toggleSearchBar()
+    };
+
+    toggleSearchBar() {
+        let toValue = this.state.expanded ? INITIAL_MARGIN : 0;
+        console.log(toValue);
+        this.setState({expanded: !this.state.expanded});
+
+        Animated.spring(this.searchInputMargin, {
+            toValue: toValue,
+            duration: 900
+        }).start();
     }
 
 }
