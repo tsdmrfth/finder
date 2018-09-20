@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "console-browserify": "^1.1.0",
     "expo": "^30.0.1",
     "firebase": "^5.5.0",
-    "latlng-to-zip": "^0.0.1",
     "prop-types": "latest",
     "qs": "^6.5.2",
     "react": "16.3.1",

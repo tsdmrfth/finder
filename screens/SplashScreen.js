@@ -7,7 +7,7 @@ import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {Image, AsyncStorage, SafeAreaView} from "react-native";
+import {AsyncStorage, Image, SafeAreaView} from "react-native";
 import {checkAuthToken} from '../actions';
 
 /**
@@ -23,7 +23,12 @@ const mainFlow = createBottomTabNavigator({
             settings: {screen: SettingsScreen}
         })
     }
-});
+    },
+    {
+        navigationOptions: {
+            tabBarVisible: false
+        }
+    });
 
 class SplashScreen extends Component {
 

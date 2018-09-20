@@ -17,5 +17,5 @@ export default {
     setMyLocation: 'Set My Location',
     searchBarPlaceholder: 'Search by locations and job names',
     googleMapApiKey: 'AIzaSyASkObTeoUxgKZKGImNHhrGEbuuL2Q_xOg',
-    iosClientId: '1071318760174-6uaabek7lcbimc40idm1n90prho3j033.apps.googleusercontent.com'
+    iosClientId: '1071318760174-6uaabek7lcbimc40idm1n90prho3j033.apps.googleusercontent.com',
 }
