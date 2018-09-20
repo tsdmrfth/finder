@@ -37,7 +37,7 @@ class MapScreen extends Component {
             left: this.searchInputMargin,
             right: this.searchInputMargin,
             backgroundColor: colors.searchInputColor + '70',
-            height: 40,
+            height: 50,
             borderWidth: 2,
             borderColor: colors.searchInputColor,
             borderRadius: this.state.expanded ? 5 : 15,
@@ -58,7 +58,17 @@ class MapScreen extends Component {
                 <MapView
                     style={{flex: 1}}
                     region={this.state.region}
-                    onRegionChangeComplete={this.onRegionChangeComplete}/>
+                    onRegionChangeComplete={this.onRegionChangeComplete}>
+
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: this.state.region.latitude,
+                            longitude: this.state.region.longitude
+                        }}
+                        title={'Title'}
+                        description={'Description'}/>
+
+                </MapView>
 
                 <Animated.View style={inputContainerStyle}>
                     <Input
