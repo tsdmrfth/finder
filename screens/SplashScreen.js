@@ -7,7 +7,7 @@ import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {AsyncStorage, Image, View} from "react-native";
+import {Image, View, AsyncStorage} from "react-native";
 import {checkFacebookToken} from '../actions';
 
 /**
@@ -29,6 +29,7 @@ class SplashScreen extends Component {
 
     componentWillMount() {
         this.props.checkFacebookToken();
+        AsyncStorage.removeItem('fb_token')
     }
 
     render() {

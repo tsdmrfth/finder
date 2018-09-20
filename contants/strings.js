@@ -9,5 +9,6 @@ export default {
     tutorialSecondPage: 'You can find jobs near to your location',
     tutorialThirdPage: 'Swipe between listed jobs and apply to them with ease',
     letsGo: "Let's go!",
-    loginWithFacebook: 'Login with Facebook'
+    loginWithFacebook: 'Login with Facebook',
+    loginScreenText:'Login with Facebook to see job posts near your location'
 }

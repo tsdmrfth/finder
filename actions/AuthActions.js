@@ -11,7 +11,7 @@ export const checkFacebookToken = () => async dispatch => {
     setTimeout(()=> dispatch({
         type: TOKEN_CHECKED,
         payload: facebookToken !== undefined && facebookToken !== '' && facebookToken !== null
-    }), 3000);
+    }), 100);
 };
 
 export const loginWithFacebook = () => async dispatch => {
