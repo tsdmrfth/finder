@@ -1,16 +1,24 @@
 import {AsyncStorage} from 'react-native';
-import {Facebook} from 'expo';
-import {FACEBOOK_LOGIN_FAILED, FACEBOOK_LOGIN_SUCCESS, TOKEN_CHECKED, CHECK_TOKEN_START} from "./types";
+import {Facebook, Google} from 'expo';
+import {
+    CHECK_TOKEN_START,
+    FACEBOOK_LOGIN_FAILED,
+    FACEBOOK_LOGIN_SUCCESS,
+    LOGIN_GOOGLE_FAILED,
+    LOGIN_GOOGLE_SUCCESS,
+    TOKEN_CHECKED
+} from "./types";
+import strings from "../contants/strings";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
  */
 
-export const checkFacebookToken = () => async dispatch => {
+export const checkAuthToken = () => async dispatch => {
     dispatch({
        type: CHECK_TOKEN_START
     });
-    let facebookToken = await AsyncStorage.getItem('fb_token');
+    let facebookToken = await AsyncStorage.getItem('auth_token');
     setTimeout(()=> dispatch({
         type: TOKEN_CHECKED,
         payload: facebookToken !== undefined && facebookToken !== '' && facebookToken !== null
@@ -18,18 +26,56 @@ export const checkFacebookToken = () => async dispatch => {
 };
 
 export const loginWithFacebook = () => async dispatch => {
-    let {type, token} = await Facebook.logInWithReadPermissionsAsync('300855640741130', {
-        permissions: ['public_profile']
-    });
+    try {
+        let {type, token} = await Facebook.logInWithReadPermissionsAsync('300855640741130', {
+            permissions: ['public_profile']
+        });
 
-    if (type === 'cancel') {
-        return dispatch({
-            type: FACEBOOK_LOGIN_FAILED
+        if (type === 'cancel') {
+            return dispatch({
+                type: FACEBOOK_LOGIN_FAILED
+            })
+        }
+
+        await saveTokenToStorage(token);
+        dispatch({
+            type: FACEBOOK_LOGIN_SUCCESS,
+        })
+
+
+    } catch (e) {
+        dispatch({
+            type: FACEBOOK_LOGIN_SUCCESS,
+        })
+    }
+};
+
+export const loginWithGoogle = () => async dispatch => {
+    try {
+        const result = await Google.logInAsync({
+            iosClientId: strings.iosClientId,
+            scopes: ['profile', 'email'],
+        });
+
+        if (result.type === 'cancel') {
+            dispatch({
+                type: LOGIN_GOOGLE_FAILED
+            })
+        } else {
+            await saveTokenToStorage(result.accessToken);
+            dispatch({
+                type: LOGIN_GOOGLE_SUCCESS,
+                payload: result
+            })
+        }
+    } catch (e) {
+        dispatch({
+            type: LOGIN_GOOGLE_FAILED
         })
     }
 
-    await AsyncStorage.setItem('fb_token', token);
-    dispatch({
-        type: FACEBOOK_LOGIN_SUCCESS,
-    })
+};
+
+const saveTokenToStorage = async (token) => {
+    return await AsyncStorage.setItem('auth_token', token);
 };
