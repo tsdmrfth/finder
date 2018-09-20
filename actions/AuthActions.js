@@ -1,5 +1,6 @@
 import {AsyncStorage} from 'react-native';
 import {Facebook, Google} from 'expo';
+import firebase from 'firebase';
 import {
     CHECK_TOKEN_START,
     FACEBOOK_LOGIN_FAILED,
@@ -74,6 +75,10 @@ export const loginWithGoogle = () => async dispatch => {
         })
     }
 
+};
+
+const saveUserToDatabase = ({name, surname, email, photoUrl}) => {
+    firebase.auth().createUserWithEmailAndPassword()
 };
 
 const saveTokenToStorage = async (token) => {

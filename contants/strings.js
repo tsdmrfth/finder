@@ -10,9 +10,12 @@ export default {
     tutorialThirdPage: 'Swipe between listed jobs and apply to them with ease',
     letsGo: "Let's go!",
     loginWithFacebook: 'Login with Facebook',
+    loginWithEmail: 'Login with Email',
+    loginWithGoogle: 'Login with Google',
     loginScreenText: 'Login with Facebook to see job posts near your location',
     apiRootUrl: 'http://api.indeed.com/ads/apisearch?',
     setMyLocation: 'Set My Location',
     searchBarPlaceholder: 'Search by locations and job names',
     googleMapApiKey: 'AIzaSyASkObTeoUxgKZKGImNHhrGEbuuL2Q_xOg',
+    iosClientId: '1071318760174-6uaabek7lcbimc40idm1n90prho3j033.apps.googleusercontent.com'
 }

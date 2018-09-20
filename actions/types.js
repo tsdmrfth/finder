@@ -7,3 +7,5 @@ export const FACEBOOK_LOGIN_FAILED = 'facebook_login_failed';
 export const TOKEN_CHECKED = 'token_check';
 export const FETCH_JOBS = 'fetch_jobs';
 export const CHECK_TOKEN_START='check_token_start';
+export const LOGIN_GOOGLE_FAILED = 'login_google_failed';
+export const LOGIN_GOOGLE_SUCCESS = 'login_google_success';

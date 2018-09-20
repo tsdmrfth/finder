@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, TouchableOpacity} from 'react-native';
+import {Image, Text, TouchableOpacity} from 'react-native';
 import isAndroid from "../utils/isAndroid";
 
 /**
@@ -11,9 +11,14 @@ class Button extends Component {
 
     render() {
         const {defaultButtonStyle, defaultButtonTextStyle} = styles;
+        const iconStyle = {
+            width: this.props.imageIcon === undefined ? 0 : 30,
+            height: this.props.imageIcon === undefined ? 0 : 30,
+        };
 
         return (
             <TouchableOpacity style={[defaultButtonStyle, this.props.buttonStyle]} onPress={this.props.onClick}>
+                <Image style={iconStyle} source={this.props.imageIcon} resizeMode={'cover'}/>
                 <Text style={[defaultButtonTextStyle, this.props.buttonTextStyle]}>
                     {this.props.buttonText}
                 </Text>
@@ -30,6 +35,7 @@ const styles = {
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'row'
     },
     defaultButtonTextStyle: {
         color: 'white',
@@ -42,7 +48,8 @@ Button.propTypes = {
     onClick: PropTypes.func.isRequired,
     buttonStyle: PropTypes.object,
     buttonTextStyle: PropTypes.object,
-    buttonText: PropTypes.string
+    buttonText: PropTypes.string,
+    imageIcon: PropTypes.any,
 };
 
 export default Button;

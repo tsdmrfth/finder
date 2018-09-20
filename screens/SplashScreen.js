@@ -7,8 +7,8 @@ import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {Image, View, SafeAreaView} from "react-native";
-import {checkFacebookToken} from '../actions';
+import {Image, AsyncStorage, SafeAreaView} from "react-native";
+import {checkAuthToken} from '../actions';
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -29,6 +29,7 @@ class SplashScreen extends Component {
 
     componentWillMount() {
         this.props.checkFacebookToken();
+        AsyncStorage.removeItem('auth_token')
     }
 
     render() {
@@ -80,4 +81,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {checkFacebookToken})(SplashScreen);
+export default connect(mapStateToProps, {checkFacebookToken: checkAuthToken})(SplashScreen);

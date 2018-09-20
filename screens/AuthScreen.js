@@ -3,7 +3,7 @@ import {Animated, Image, Text, View} from 'react-native';
 import Button from "../components/Button";
 import strings from "../contants/strings";
 import {connect} from 'react-redux';
-import {loginWithFacebook} from '../actions';
+import {loginWithFacebook, loginWithGoogle} from '../actions';
 import resolveAssetSource from 'resolveAssetSource';
 import getScreenWidth from "../utils/getScreenWidth";
 import isAndroid from "../utils/isAndroid";
@@ -100,7 +100,7 @@ class AuthScreen extends Component {
     };
 
     onLoginWithGoogleButtonClicked = () => {
-        //this.props.loginWithFacebook()
+        this.props.loginWithGoogle()
     };
 
     onLoginWithEmailButtonClicked = () => {
@@ -224,4 +224,4 @@ const styles = {
     },
 };
 
-export default connect(null, {loginWithFacebook})(AuthScreen);
+export default connect(null, {loginWithFacebook, loginWithGoogle})(AuthScreen);
