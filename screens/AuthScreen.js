@@ -7,6 +7,7 @@ import {loginWithFacebook} from '../actions';
 import resolveAssetSource from 'resolveAssetSource';
 import getScreenWidth from "../utils/getScreenWidth";
 import isAndroid from "../utils/isAndroid";
+import colors from "../contants/colors";
 
 const icon = require('../assets/job_finder.png');
 let source = resolveAssetSource(icon);
@@ -42,55 +43,32 @@ class AuthScreen extends Component {
 
     render(){
         const {desiredWidth, desiredHeight} = this.generateSource();
+        const {rootContainerStyle, cardContainerStyle, overlayViewContainer, infoTextStyle, imageStyle, loginFacebookButtonStyle} = styles;
 
         return (
-            <View style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
+            <View style={rootContainerStyle}>
 
-                <Text style={{
-                    fontSize:20,
-                    marginLeft: 30,
-                    marginRight: 30,
-                    textAlign: 'center',
-                    fontFamily: isAndroid() ? 'Roboto' : 'Avenir',
-                    color:'#38465a90',
-                    borderWidth: 2,
-                    borderColor: '#38465a60',
-                    padding:10,
-                    borderRadius: 10,
-                    shadowColor: '#38465a',
-                    shadowOpacity: 0.7,
-                    shadowOffset: {
-                        width: 0.6,
-                        height: 0.8
-                    },
-                }}>
-                    {strings.loginScreenText}
-                </Text>
+                <View style={cardContainerStyle}>
+
+                    <View style={overlayViewContainer}>
+                        <Image source={require('../assets/hey.jpg')}
+                               style={{width: 50, height: 50}}/>
+                    </View>
+
+                    <Text style={infoTextStyle}>
+                        {strings.loginScreenText}
+                    </Text>
+
+                </View>
 
                 <Image source={{uri: source.uri}}
-                       style={{
-                           resizeMode: Image.resizeMode.center,
-                           width: desiredWidth,
-                           height: desiredHeight,
-                           borderWidth: 1,
-                           borderColor: '#4dc8ff',
-                           borderRadius: 10,
-                           shadowColor: '#3366ff',
-                           shadowOpacity: 0.7,
-                           shadowOffset: {
-                               width: 0.6,
-                               height: 0.8
-                           },
-                       }}/>
-                <Button onClick={this.onLoginWithFacebookButtonClicked} buttonText={strings.loginWithFacebook}
-                        buttonStyle={{
-                            shadowColor: '#3366ff',
-                            shadowOpacity: 0.6,
-                            shadowOffset: {
-                                width: 0.6,
-                                height: 0.8
-                            },
-                        }}/>
+                       style={[imageStyle, {width: desiredWidth, height: desiredHeight}]}/>
+
+                <Button
+                    onClick={this.onLoginWithFacebookButtonClicked}
+                    buttonText={strings.loginWithFacebook}
+                    buttonStyle={loginFacebookButtonStyle}/>
+
             </View>
         );
     }
@@ -100,5 +78,66 @@ class AuthScreen extends Component {
     }
 
 }
+
+const styles = {
+    rootContainerStyle: {
+        flex: 1,
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    cardContainerStyle: {
+        backgroundColor: colors.loginPageInfoCardColor,
+        borderRadius: 10,
+        shadowColor: colors.infoTextColor,
+        shadowOpacity: 0.4,
+        shadowOffset: {
+            width: 0.2,
+            height: 0.4
+        },
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    overlayViewContainer: {
+        width: 90,
+        height: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 45,
+        position: 'absolute',
+        top: -60,
+        backgroundColor: colors.loginPageInfoCardColor,
+    },
+    infoTextStyle: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontFamily: isAndroid() ? 'Roboto' : 'Avenir',
+        padding: 10,
+        color: colors.infoTextColor,
+        marginTop: 10
+    },
+    imageStyle: {
+        resizeMode: Image.resizeMode.center,
+        borderWidth: 1,
+        borderColor: '#4dc8ff',
+        borderRadius: 10,
+        shadowColor: '#3366ff',
+        shadowOpacity: 0.7,
+        shadowOffset: {
+            width: 0.6,
+            height: 0.8
+        },
+    },
+    loginFacebookButtonStyle: {
+        shadowColor: '#3366ff',
+        shadowOpacity: 0.6,
+        shadowOffset: {
+            width: 0.6,
+            height: 0.8
+        },
+    }
+};
 
 export default connect(null, {loginWithFacebook})(AuthScreen);
