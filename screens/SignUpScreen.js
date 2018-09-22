@@ -1,32 +1,22 @@
 import React, {Component} from 'react';
-import {Image, KeyboardAvoidingView, View} from 'react-native';
-import Input from "../components/Input";
+import {Image, ImageBackground, KeyboardAvoidingView, View} from "react-native";
+import getScreenWidth from "../utils/getScreenWidth";
 import getScreenHeight from "../utils/getScreenHeight";
 import colors from "../contants/colors";
 import strings from "../contants/strings";
-import Button from "../components/Button";
-import {connect} from 'react-redux';
-import {inputValueChanged, loginWithEmailAndPassword} from "../actions";
-import getScreenWidth from "../utils/getScreenWidth";
+import Input from "../components/Input";
+import ClickableIcon from "../components/ClickableIcon";
 
 /**
- * Created by Fatih Taşdemir on 21.09.2018
+ * Created by Fatih Taşdemir on 22.09.2018
  */
 
 const CARD_BOTTOM_MARGIN = getScreenHeight() * 0.3;
 
-class LoginScreen extends Component {
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps !== this.props){
-            if (nextProps.login_success) {
-                this.props.navigation.navigate('map')
-            }
-        }
-    }
+class SignUpScreen extends Component {
 
     render() {
-        const {overlayViewStyle, inputContainerStyle, inputStyle, imageContainerStyle, loginButtonStyle} = styles;
+        const {overlayViewStyle, inputContainerStyle, inputStyle, imageContainerStyle, loginButtonStyle, plusIconStyle} = styles;
 
         return (
             <View style={{flex: 1}}>
@@ -39,38 +29,40 @@ class LoginScreen extends Component {
 
                 <KeyboardAvoidingView style={inputContainerStyle} behavior={'padding'} enabled>
 
-                    <View style={imageContainerStyle}>
-                        <Image style={{width: 200, height: 60}} source={require('../assets/theree_monkey.png')}/>
-                    </View>
+                    <ImageBackground style={imageContainerStyle} source={require('../assets/human.png')}>
+                        <ClickableIcon iconUri={require('../assets/plus_icon.png')}
+                                       iconStyle={plusIconStyle}/>
+                    </ImageBackground>
+
+                    <Input
+                        onChangeText={text => this.props.inputValueChanged({which: 'name', value: text})}
+                        value={this.props.name}
+                        placeholder={strings.enterYourName}
+                        inputStyle={inputStyle}/>
+
+                    <Input
+                        onChangeText={text => this.props.inputValueChanged({which: 'surname', value: text})}
+                        value={this.props.surname}
+                        placeholder={strings.enterYourSurname}
+                        inputStyle={inputStyle}/>
 
                     <Input
                         onChangeText={text => this.props.inputValueChanged({which: 'email', value: text})}
                         value={this.props.email}
-                        placeholder={strings.email}
+                        placeholder={strings.enterYourEmail}
                         inputStyle={inputStyle}/>
 
                     <Input
                         onChangeText={text => this.props.inputValueChanged({which: 'password', value: text})}
                         value={this.props.password}
-                        placeholder={strings.password}
+                        placeholder={strings.enterYourPassword}
                         inputStyle={inputStyle}/>
-
-                    <Button
-                        onClick={this.onLoginButtonClicked}
-                        buttonText={strings.login}
-                        buttonStyle={loginButtonStyle}
-                        loading={this.props.login_loading}/>
 
                 </KeyboardAvoidingView>
 
             </View>
         );
     }
-
-    onLoginButtonClicked = () => {
-        const {email, password} = this.props;
-        this.props.loginWithEmailAndPassword({email: email, password: password})
-    };
 
 }
 
@@ -105,17 +97,18 @@ const styles = {
     },
     imageContainerStyle: {
         position: 'absolute',
-        left: 40,
-        right: 40,
-        top: -60,
+        width: 120,
+        height: 120,
+        top: -120,
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'stretch',
+        alignSelf: 'center',
         backgroundColor: colors.inputContainerBackgroundColor,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderRadius: 40,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
-    loginButtonStyle: {
+    signUpButtonStyle: {
         backgroundColor: colors.loginButtonColor,
         width: '60%',
         height: 50,
@@ -126,12 +119,14 @@ const styles = {
     loginButtonTextStyle: {
         fontFamily: strings.fontFamily,
         fontSize: 16
+    },
+    plusIconStyle: {
+        width: 40,
+        height: 40,
+        position: 'absolute',
+        top: -5,
+        right: -20
     }
 };
 
-const mapStateToProps = state => {
-    const {email, password, login_loading, login_success} = state.login;
-    return {email, password, login_loading, login_success}
-};
-
-export default connect(mapStateToProps, {loginWithEmailAndPassword, inputValueChanged})(LoginScreen);
+export default SignUpScreen;

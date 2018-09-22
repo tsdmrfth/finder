@@ -120,7 +120,7 @@ class AuthScreen extends Component {
     };
 
     onSignUpWithEmailButtonClicked = () => {
-
+        this.props.navigation.navigate('signUp')
     };
 
     generateSource = () => {

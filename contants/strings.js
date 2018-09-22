@@ -27,5 +27,9 @@ export default {
     noAccount: "Don't have an account?",
     letsCreate: "Let's create a new one for you",
     ifSo: 'If so click here!',
-    signUpWithEmail: 'Signup with Email'
+    signUpWithEmail: 'Sign up with Email',
+    enterYourEmail:'Enter your email',
+    enterYourPassword:'Enter your password',
+    enterYourName:'What is your name?',
+    enterYourSurname:"What is your surname?"
 }

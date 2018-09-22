@@ -28,7 +28,7 @@ export const checkAuthToken = () => async dispatch => {
     setTimeout(()=> dispatch({
         type: TOKEN_CHECKED,
         payload: Boolean(isAuthenticated)
-    }), 1000);
+    }), 100);
 };
 
 export const loginWithFacebook = () => async dispatch => {
@@ -53,8 +53,6 @@ export const loginWithFacebook = () => async dispatch => {
         dispatch({
             type: FACEBOOK_LOGIN_SUCCESS,
         })
-
-
     } catch (e) {
         dispatch({
             type: FACEBOOK_LOGIN_SUCCESS,

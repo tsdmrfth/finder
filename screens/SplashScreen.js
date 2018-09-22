@@ -10,6 +10,7 @@ import {AsyncStorage, Image, SafeAreaView} from "react-native";
 import {checkAuthToken} from '../actions';
 import AuthScreen from "./AuthScreen";
 import LoginScreen from "./LoginScreen";
+import SignUpScreen from "./SignUpScreen";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -35,7 +36,7 @@ class SplashScreen extends Component {
 
     componentWillMount() {
         this.props.checkFacebookToken();
-        AsyncStorage.removeItem('auth_token')
+        AsyncStorage.removeItem('authenticated')
     }
 
     render() {
@@ -54,8 +55,21 @@ class SplashScreen extends Component {
                 auth: {
                     screen: createStackNavigator({
                         initial: {screen: AuthScreen},
-                        login: {screen: LoginScreen}
-                    })
+                            login: {screen: LoginScreen},
+                            signUp: {screen: SignUpScreen}
+                        },
+                        {
+                            navigationOptions: {
+                                headerTransparent: true,
+                                headerBackImage: () => {
+                                    return (
+                                        <Image
+                                            style={{width: 40, height: 40, marginTop: 10, marginLeft: 10}}
+                                            source={require('../assets/back_button_icon.png')}/>
+                                    )
+                                }
+                            }
+                        })
                 },
                 main: {screen: mainFlow}
             },
