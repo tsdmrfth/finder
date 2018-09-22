@@ -12,6 +12,7 @@ import strings from "../contants/strings";
 import firebase from 'firebase';
 import axios from 'axios';
 import generatePassword from "../utils/generatePassword";
+import {saveAuthenticatedToLocalStorage} from "../utils/saveAuthenticatedToLocalStorage";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -23,11 +24,11 @@ export const checkAuthToken = () => async dispatch => {
     dispatch({
        type: CHECK_TOKEN_START
     });
-    let facebookToken = await AsyncStorage.getItem('auth_token');
+    let isAuthenticated = await AsyncStorage.getItem('authenticated');
     setTimeout(()=> dispatch({
         type: TOKEN_CHECKED,
-        payload: facebookToken !== undefined && facebookToken !== '' && facebookToken !== null
-    }), 100);
+        payload: Boolean(isAuthenticated)
+    }), 1000);
 };
 
 export const loginWithFacebook = () => async dispatch => {
@@ -42,7 +43,7 @@ export const loginWithFacebook = () => async dispatch => {
             })
         }
 
-        await saveTokenToStorage(token);
+        await saveAuthenticatedToLocalStorage();
         let response = await axios.get(`${FACEBOOK_GRAPH_URL}${token}&fields=name,last_name,picture.type(large),email`);
 
         const {name, last_name, email} = response.data;
@@ -73,7 +74,7 @@ export const loginWithGoogle = () => async dispatch => {
                 type: LOGIN_GOOGLE_FAILED
             })
         } else {
-            await saveTokenToStorage(result.accessToken);
+            await saveAuthenticatedToLocalStorage();
             const {givenName, familyName, email, photoUrl} = result.user;
             await saveUserToDatabase({name: givenName, surname: familyName, email, photoUrl});
 
@@ -103,8 +104,4 @@ const saveUserToDatabase = async ({name, surname, email, photoUrl}) => {
         console.log(e)
     }
 
-};
-
-const saveTokenToStorage = async (token) => {
-    return await AsyncStorage.setItem('auth_token', token);
 };

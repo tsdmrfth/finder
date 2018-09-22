@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Image, KeyboardAvoidingView, View} from 'react-native';
-import {MapView} from 'expo';
-import isAndroid from "../utils/isAndroid";
 import Input from "../components/Input";
 import getScreenHeight from "../utils/getScreenHeight";
 import colors from "../contants/colors";
 import strings from "../contants/strings";
 import Button from "../components/Button";
+import {connect} from 'react-redux';
+import {inputValueChanged, loginWithEmailAndPassword} from "../actions";
+import getScreenWidth from "../utils/getScreenWidth";
 
 /**
  * Created by Fatih Taşdemir on 21.09.2018
@@ -34,17 +35,26 @@ class LoginScreen extends Component {
         }
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps !== this.props){
+            if (nextProps.login_success) {
+                console.log('success');
+                this.props.navigation.navigate('map')
+            }
+        }
+    }
+
     render() {
         const {overlayViewStyle, inputContainerStyle, inputStyle, imageContainerStyle, loginButtonStyle} = styles;
 
         return (
             <View style={{flex: 1}}>
-
-                <MapView
-                    scrollEnabled={false}
-                    style={{flex: 1}}
-                    cacheEnabled={isAndroid()}
-                    initialRegion={initialRegion}/>
+                
+                <View>
+                    <Image
+                        source={require('../assets/map.png')}
+                        style={{width: getScreenWidth(), height: getScreenHeight()}}/>
+                </View>
 
                 <View style={overlayViewStyle}/>
 
@@ -55,17 +65,22 @@ class LoginScreen extends Component {
                     </View>
 
                     <Input
+                        onChangeText={text => this.props.inputValueChanged({which: 'email', value: text})}
+                        value={this.props.email}
                         placeholder={strings.email}
                         inputStyle={inputStyle}/>
 
                     <Input
+                        onChangeText={text => this.props.inputValueChanged({which: 'password', value: text})}
+                        value={this.props.password}
                         placeholder={strings.password}
                         inputStyle={inputStyle}/>
 
                     <Button
                         onClick={this.onLoginButtonClicked}
                         buttonText={strings.login}
-                        buttonStyle={loginButtonStyle}/>
+                        buttonStyle={loginButtonStyle}
+                        loading={this.props.login_loading}/>
 
                 </KeyboardAvoidingView>
 
@@ -74,7 +89,8 @@ class LoginScreen extends Component {
     }
 
     onLoginButtonClicked = () => {
-
+        const {email, password} = this.props;
+        this.props.loginWithEmailAndPassword({email: email, password: password})
     };
 
 }
@@ -134,4 +150,9 @@ const styles = {
     }
 };
 
-export default LoginScreen;
+const mapStateToProps = state => {
+    const {email, password, login_loading, login_success} = state.login;
+    return {email, password, login_loading, login_success}
+};
+
+export default connect(mapStateToProps, {loginWithEmailAndPassword, inputValueChanged})(LoginScreen);

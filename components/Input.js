@@ -29,7 +29,7 @@ const styles = {
 };
 
 Input.propTypes = {
-    inputStyle: PropTypes.object
+    inputStyle: PropTypes.object,
 };
 
 export default Input;

@@ -9,3 +9,7 @@ export const FETCH_JOBS = 'fetch_jobs';
 export const CHECK_TOKEN_START='check_token_start';
 export const LOGIN_GOOGLE_FAILED = 'login_google_failed';
 export const LOGIN_GOOGLE_SUCCESS = 'login_google_success';
+export const INPUT_VALUE_CHANGED='input_value_changed';
+export const LOGIN_USER = 'login_user';
+export const LOGIN_WITH_EMAIL_SUCCESS = 'login_with_email_success';
+export const LOGIN_WITH_EMAIL_FAILED = 'login_with_email_failed';

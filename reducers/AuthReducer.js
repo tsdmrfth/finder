@@ -5,12 +5,23 @@ import {
     CHECK_TOKEN_START,
     FACEBOOK_LOGIN_FAILED,
     FACEBOOK_LOGIN_SUCCESS,
+    INPUT_VALUE_CHANGED,
     LOGIN_GOOGLE_FAILED,
     LOGIN_GOOGLE_SUCCESS,
+    LOGIN_USER,
+    LOGIN_WITH_EMAIL_FAILED,
+    LOGIN_WITH_EMAIL_SUCCESS,
     TOKEN_CHECKED
 } from "../actions/types";
 
-const INITIAL_STATE = {loading: false, hasToken: false};
+const INITIAL_STATE = {
+    loading: false,
+    hasToken: false,
+    email: 'test1@test.com',
+    password: 'tester',
+    login_loading: false,
+    login_success: false
+};
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Image, Text, TouchableOpacity} from 'react-native';
-import isAndroid from "../utils/isAndroid";
 import strings from "../contants/strings";
 
 /**
@@ -11,7 +10,7 @@ import strings from "../contants/strings";
 class Button extends Component {
 
     render() {
-        const {defaultButtonStyle, defaultButtonTextStyle} = styles;
+        const {defaultButtonStyle} = styles;
         const iconStyle = {
             width: this.props.imageIcon === undefined ? 0 : 30,
             height: this.props.imageIcon === undefined ? 0 : 30,
@@ -20,13 +19,22 @@ class Button extends Component {
         return (
             <TouchableOpacity style={[defaultButtonStyle, this.props.buttonStyle]} onPress={this.props.onClick}>
                 <Image style={iconStyle} source={this.props.imageIcon} resizeMode={'cover'}/>
-                <Text style={[defaultButtonTextStyle, this.props.buttonTextStyle]}>
-                    {this.props.buttonText}
-                </Text>
+                {this.renderButtonInside()}
             </TouchableOpacity>
         );
     }
 
+    renderButtonInside() {
+        if (this.props.loading) {
+            return <Image source={require('../assets/loading.gif')} style={{width: 40, height: 40}}/>
+        }
+
+        return (
+            <Text style={[styles.defaultButtonTextStyle, this.props.buttonTextStyle]}>
+                {this.props.buttonText}
+            </Text>
+        );
+    }
 }
 
 const styles = {
@@ -51,6 +59,7 @@ Button.propTypes = {
     buttonTextStyle: PropTypes.object,
     buttonText: PropTypes.string,
     imageIcon: PropTypes.any,
+    loading: PropTypes.bool
 };
 
 export default Button;
