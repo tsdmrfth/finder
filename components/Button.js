@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Image, Text, TouchableOpacity} from 'react-native';
 import isAndroid from "../utils/isAndroid";
+import strings from "../contants/strings";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -40,7 +41,7 @@ const styles = {
     defaultButtonTextStyle: {
         color: 'white',
         fontSize: 18,
-        fontFamily: isAndroid() ? 'Roboto' : 'Avenir-Medium'
+        fontFamily: strings.fontFamily,
     }
 };
 

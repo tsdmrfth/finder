@@ -11,4 +11,10 @@ export default {
     black: '#000',
     googleButtonTextColor: 'rgb(66, 133, 244)',
     emailButtonColor: 'rgb(0, 91,141)',
+    overlayColor: '#57657499',
+    inputContainerBackgroundColor: '#f1f2f6',
+    inputColor: '#57657499',
+    loginPageInputTextColor: '#747d8c',
+    loginButtonColor: '#747d8c',
+    signUpEmailButtonColor: '#353b48',
 }

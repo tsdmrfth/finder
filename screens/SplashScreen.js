@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
 import WelcomeScreen from "./WelcomeScreen";
-import AuthScreen from "./AuthScreen";
 import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
 import {AsyncStorage, Image, SafeAreaView} from "react-native";
 import {checkAuthToken} from '../actions';
+import AuthScreen from "./AuthScreen";
+import LoginScreen from "./LoginScreen";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -49,9 +50,14 @@ class SplashScreen extends Component {
             },);
 
         const UnsignedFlow = createBottomTabNavigator({
-            welcome: {screen: WelcomeScreen},
-            auth: {screen: AuthScreen},
-            main: {screen: mainFlow}
+                welcome: {screen: WelcomeScreen},
+                auth: {
+                    screen: createStackNavigator({
+                        initial: {screen: AuthScreen},
+                        login: {screen: LoginScreen}
+                    })
+                },
+                main: {screen: mainFlow}
             },
             {
                 navigationOptions: {

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {Animated, Image, Text, View} from 'react-native';
+import {Animated, Image, SafeAreaView, Text, View} from 'react-native';
 import Button from "../components/Button";
 import strings from "../contants/strings";
 import {connect} from 'react-redux';
 import {loginWithFacebook, loginWithGoogle} from '../actions';
 import resolveAssetSource from 'resolveAssetSource';
 import getScreenWidth from "../utils/getScreenWidth";
-import isAndroid from "../utils/isAndroid";
 import colors from "../contants/colors";
 
 const icon = require('../assets/job_finder.png');
@@ -16,6 +15,10 @@ const BUTTONS_INITIAL_WIDTH = SCREEN_WIDTH * 0.6;
 const BUTTONS_MAX_WIDTH = SCREEN_WIDTH - 2 * 20;
 
 class AuthScreen extends Component {
+
+    static navigationOptions = {
+        headerTransparent: true,
+    };
 
     constructor() {
         super();
@@ -42,7 +45,9 @@ class AuthScreen extends Component {
             facebookButtonStyle,
             googleButtonStyle,
             googleButtonTextStyle,
-            emailButtonStyle
+            emailButtonStyle,
+            signUpEmailButtonStyle,
+            signUpWithEmailButtonTextStyle
         } = styles;
 
         const buttonsContainerViewStyle = {
@@ -50,7 +55,7 @@ class AuthScreen extends Component {
         };
 
         return (
-            <View style={rootContainerStyle}>
+            <SafeAreaView style={rootContainerStyle}>
 
                 <View style={cardContainerStyle}>
 
@@ -71,12 +76,6 @@ class AuthScreen extends Component {
                 <Animated.View style={buttonsContainerViewStyle}>
 
                     <Button
-                        onClick={this.onLoginWithFacebookButtonClicked}
-                        buttonText={strings.loginWithFacebook}
-                        buttonStyle={facebookButtonStyle}
-                        imageIcon={require('../assets/facebook_icon.png')}/>
-
-                    <Button
                         onClick={this.onLoginWithGoogleButtonClicked}
                         buttonText={strings.loginWithGoogle}
                         buttonStyle={googleButtonStyle}
@@ -84,27 +83,44 @@ class AuthScreen extends Component {
                         imageIcon={require('../assets/google_icon.png')}/>
 
                     <Button
+                        onClick={this.onLoginWithFacebookButtonClicked}
+                        buttonText={strings.loginWithFacebook}
+                        buttonStyle={facebookButtonStyle}
+                        imageIcon={require('../assets/facebook_icon.png')}/>
+
+                    <Button
                         onClick={this.onLoginWithEmailButtonClicked}
                         buttonText={strings.loginWithEmail}
                         buttonStyle={emailButtonStyle}
                         imageIcon={require('../assets/email_icon.png')}/>
 
+                    <Button
+                        onClick={this.onSignUpWithEmailButtonClicked}
+                        buttonText={strings.signUpWithEmail}
+                        buttonStyle={signUpEmailButtonStyle}
+                        buttonTextStyle={signUpWithEmailButtonTextStyle}
+                        imageIcon={require('../assets/create_user.png')}/>
+
                 </Animated.View>
 
-            </View>
+            </SafeAreaView>
         );
     }
-
-    onLoginWithFacebookButtonClicked = () => {
-        this.props.loginWithFacebook()
-    };
 
     onLoginWithGoogleButtonClicked = () => {
         this.props.loginWithGoogle()
     };
 
+    onLoginWithFacebookButtonClicked = () => {
+        this.props.loginWithFacebook()
+    };
+
     onLoginWithEmailButtonClicked = () => {
-        //this.props.loginWithFacebook()
+        this.props.navigation.navigate('login')
+    };
+
+    onSignUpWithEmailButtonClicked = () => {
+
     };
 
     generateSource = () => {
@@ -138,8 +154,9 @@ class AuthScreen extends Component {
 const styles = {
     rootContainerStyle: {
         flex: 1,
-        justifyContent: 'space-evenly',
-        alignItems: 'center'
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: colors.white
     },
     cardContainerStyle: {
         backgroundColor: colors.loginPageInfoCardColor,
@@ -169,7 +186,7 @@ const styles = {
     infoTextStyle: {
         fontSize: 20,
         textAlign: 'center',
-        fontFamily: isAndroid() ? 'Roboto' : 'Avenir',
+        fontFamily: strings.fontFamily,
         padding: 10,
         color: colors.infoTextColor,
         marginTop: 10
@@ -195,6 +212,7 @@ const styles = {
             width: 0.6,
             height: 0.8
         },
+        marginTop: 15,
     },
     googleButtonStyle: {
         backgroundColor: colors.white,
@@ -222,6 +240,20 @@ const styles = {
     emailButtonTextStyle: {
         color: colors.white
     },
+    signUpEmailButtonStyle: {
+        backgroundColor: colors.signUpEmailButtonColor,
+        shadowColor: colors.signUpEmailButtonColor,
+        shadowOpacity: 0.2,
+        shadowOffset: {
+            width: 0.4,
+            height: 0.4
+        },
+        marginTop: 15,
+    },
+    signUpWithEmailButtonTextStyle: {
+        color: colors.white,
+        marginLeft: 5
+    }
 };
 
 export default connect(null, {loginWithFacebook, loginWithGoogle})(AuthScreen);
