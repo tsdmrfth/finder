@@ -24,6 +24,12 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyBBXIVSRqpcuO-Zw4Mkdt4J9W7v11shhO8"
+      },
+      "bundleIdentifier": "com.mobile.finder",
+      "permissions": ["CAMERA", "CAMERA_ROLL"],
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera.",
+        "NSPhotoLibraryUsageDescription": "This app"
       }
     },
     "android":{

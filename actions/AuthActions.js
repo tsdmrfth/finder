@@ -92,7 +92,9 @@ const saveUserToDatabase = async ({name, surname, email, photoUrl}) => {
     try {
         let create = await firebase.auth().createUserWithEmailAndPassword(email, generatePassword());
         let userRef = await firebase.database().ref(`/users/${create.user.uid}`);
-        await userRef.set({
+
+        await userRef.update({
+            email,
             photoUrl,
             name,
             surname,

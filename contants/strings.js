@@ -31,5 +31,6 @@ export default {
     enterYourEmail:'Enter your email',
     enterYourPassword:'Enter your password',
     enterYourName:'What is your name?',
-    enterYourSurname:"What is your surname?"
+    enterYourSurname:"What is your surname?",
+    signUp:'Sign up'
 }

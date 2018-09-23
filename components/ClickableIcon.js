@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Image, TouchableOpacity} from 'react-native';
+import {Animated, Image, TouchableWithoutFeedback} from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
@@ -10,17 +10,15 @@ class ClickableIcon extends Component {
 
     constructor() {
         super();
-        this.scale = new Animated.Value(0.4)
+        this.scale = new Animated.Value(1)
     }
 
     componentDidMount() {
         setTimeout(() => {
-            Animated.spring(this.scale, {
-                toValue: 1,
-                friction: 0.9,
-                tension: 0.3
-            }).start()
-        }, 400);
+            this.handleOnPressIn(() => {
+                this.handleOnPressOut()
+            })
+        }, 700)
     }
 
     render() {
@@ -29,12 +27,36 @@ class ClickableIcon extends Component {
         };
 
         return (
-            <TouchableOpacity onPress={this.props.onClick} style={this.props.iconStyle}>
-                <Animated.View style={animatedStyle}>
+            <TouchableWithoutFeedback
+                onPress={this.props.onClick}
+                onPressIn={this.handleOnPressIn}
+                onPressOut={this.handleOnPressOut}>
+                <Animated.View style={[animatedStyle, this.props.iconStyle]}>
                     <Image style={this.props.iconStyle} source={this.props.iconUri}/>
                 </Animated.View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
         );
+    }
+
+    handleOnPressIn = (callback) => {
+        Animated.spring(this.scale, {
+            toValue: 0.4,
+            tension: 3
+        }).start();
+
+        setTimeout(() => {
+            try {
+                callback()
+            } catch (e) {
+            }
+        }, 100)
+    };
+
+    handleOnPressOut = () => {
+        Animated.spring(this.scale, {
+            toValue: 1.1,
+            tension: 3
+        }).start()
     }
 
 }

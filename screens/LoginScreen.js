@@ -53,6 +53,7 @@ class LoginScreen extends Component {
                         onChangeText={text => this.props.inputValueChanged({which: 'password', value: text})}
                         value={this.props.password}
                         placeholder={strings.password}
+                        secureTextEntry
                         inputStyle={inputStyle}/>
 
                     <Button

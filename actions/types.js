@@ -13,3 +13,6 @@ export const INPUT_VALUE_CHANGED='input_value_changed';
 export const LOGIN_USER = 'login_user';
 export const LOGIN_WITH_EMAIL_SUCCESS = 'login_with_email_success';
 export const LOGIN_WITH_EMAIL_FAILED = 'login_with_email_failed';
+export const CREATE_USER = 'create_user';
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_FAILED = 'CREATE_USER_FAILED';

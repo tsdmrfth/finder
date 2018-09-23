@@ -9,24 +9,38 @@ import PropTypes from 'prop-types';
 
 class Input extends Component {
 
+    state = {
+        focused: false
+    };
+
     render() {
-        const {inputStyle} = styles;
+        const inputStyle = {
+            backgroundColor: colors.white,
+            borderRadius: 20,
+            height: 50,
+            borderColor: colors.inputFocusedColor,
+            borderWidth: this.state.focused ? 2 : 0
+        };
+
         return (
             <TextInput
                 {...this.props}
                 style={[inputStyle, this.props.inputStyle]}
-            />
+                onFocus={this.handleOnFocus}
+                onBlur={this.handleOnBlur}
+                enablesReturnKeyAutomatically/>
         );
     }
-}
 
-const styles = {
-    inputStyle: {
-        backgroundColor: colors.white,
-        borderRadius: 20,
-        height: 50,
+    handleOnFocus = () => {
+        this.setState({focused: true})
+    };
+
+    handleOnBlur = () => {
+        this.setState({focused: false})
     }
-};
+
+}
 
 Input.propTypes = {
     inputStyle: PropTypes.object,

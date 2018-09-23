@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Image, Text, TouchableOpacity} from 'react-native';
+import {Animated, Image, Text, TouchableWithoutFeedback} from 'react-native';
 import strings from "../contants/strings";
 
 /**
@@ -9,6 +9,11 @@ import strings from "../contants/strings";
 
 class Button extends Component {
 
+    constructor() {
+        super();
+        this.scale = new Animated.Value(1);
+    }
+
     render() {
         const {defaultButtonStyle} = styles;
         const iconStyle = {
@@ -16,12 +21,24 @@ class Button extends Component {
             height: this.props.imageIcon === undefined ? 0 : 30,
         };
 
+        const animatedStyle = {
+            transform: [{scale: this.scale}]
+        };
+
         return (
-            <TouchableOpacity style={[defaultButtonStyle, this.props.buttonStyle]} onPress={this.props.onClick}>
-                <Image style={iconStyle} source={this.props.imageIcon} resizeMode={'cover'}/>
-                {this.renderButtonInside()}
-            </TouchableOpacity>
+            <TouchableWithoutFeedback
+                onPressOut={this.handleOnPressOut}
+                onPressIn={this.handleOnPressIn}>
+                <Animated.View style={[animatedStyle, defaultButtonStyle, this.props.buttonStyle]}>
+                    <Image style={iconStyle} source={this.props.imageIcon} resizeMode={'cover'}/>
+                    {this.renderButtonInside()}
+                </Animated.View>
+            </TouchableWithoutFeedback>
         );
+    }
+
+    click() {
+        this.handleOnPressOut()
     }
 
     renderButtonInside() {
@@ -35,6 +52,24 @@ class Button extends Component {
             </Text>
         );
     }
+
+    handleOnPressIn = () => {
+        Animated.spring(this.scale, {
+            toValue: 0.6,
+        }).start()
+    };
+
+    handleOnPressOut = () => {
+        setTimeout(() => {
+            this.props.onClick()
+        }, 300);
+
+        Animated.spring(this.scale, {
+            toValue: 1,
+            duration: 1
+        }).start()
+    };
+
 }
 
 const styles = {

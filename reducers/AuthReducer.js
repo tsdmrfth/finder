@@ -13,7 +13,7 @@ import {
 const INITIAL_STATE = {
     loading: false,
     hasToken: false,
-    email: 'test1@test.com',
+    email: 'test9@test.com',
     password: 'tester',
     login_loading: false,
     login_success: false

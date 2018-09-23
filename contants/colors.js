@@ -17,4 +17,6 @@ export default {
     loginPageInputTextColor: '#747d8c',
     loginButtonColor: '#747d8c',
     signUpEmailButtonColor: '#353b48',
+    inputFocusedColor:'#273c7540',
+    errorTextColor: '#e8411890'
 }

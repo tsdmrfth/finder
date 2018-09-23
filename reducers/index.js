@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import AuthReducer from "./AuthReducer";
 import JobReducer from "./JobReducer";
 import LoginReducer from "./LoginReducer";
+import SignUpReducer from "./SignUpReducer";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -10,5 +11,6 @@ import LoginReducer from "./LoginReducer";
 export default combineReducers({
     auth: AuthReducer,
     jobs: JobReducer,
-    login: LoginReducer
+    login: LoginReducer,
+    signUp: SignUpReducer
 })
