@@ -25,7 +25,7 @@ const generateUrl = (zip) => {
 
 export const fetchJobs = (region) => async (dispatch) => {
     try {
-        const googleUrl = `${GOOGLE_MAPS_ROOT_URL}${region.latitude},${region.longitude}&key=${strings.googleMapApiKey}`;
+        /*const googleUrl = `${GOOGLE_MAPS_ROOT_URL}${region.latitude},${region.longitude}&key=${strings.googleMapApiKey}`;
         const zip = await axios.get(googleUrl);
         const url = generateUrl(zip);
         const {data} = await axios.get(url);
@@ -33,7 +33,7 @@ export const fetchJobs = (region) => async (dispatch) => {
         dispatch({
             type: FETCH_JOBS,
             payload: data
-        })
+        })*/
 
     } catch (e) {
         console.error(e)

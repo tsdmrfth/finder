@@ -18,21 +18,20 @@ export const loginWithEmailAndPassword = ({email, password}) => async dispatch =
         type: LOGIN_USER
     });
     try {
-        let response = await firebase.auth().signInWithEmailAndPassword('test1@test.com', password);
-        const {fullName, photoUrl, email} = response.user;
+        let response = await firebase.auth().signInWithEmailAndPassword('finder.test@mailinator.com', password);
+        //const {fullName, photoUrl, email} = response.user;
         await saveAuthenticatedToLocalStorage();
         setTimeout(() => {
             dispatch({
                 type: LOGIN_WITH_EMAIL_SUCCESS
             });
-        }, 1400)
-        //await saveUserToLocalDatabase(fullName, photoUrl, email);
+        }, 500)
     } catch (e) {
         console.log(e);
         setTimeout(() => {
             dispatch({
                 type: LOGIN_WITH_EMAIL_FAILED
             })
-        }, 1000)
+        }, 500)
     }
 };

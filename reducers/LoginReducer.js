@@ -5,7 +5,7 @@ import {INPUT_VALUE_CHANGED, LOGIN_USER, LOGIN_WITH_EMAIL_FAILED, LOGIN_WITH_EMA
  */
 
 const INITIAL_STATE = {
-    email: 'test1@test.com',
+    email: 'finder.test@mailinator.com',
     password: 'tester',
     login_loading: false,
     login_success: false

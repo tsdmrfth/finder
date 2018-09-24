@@ -28,7 +28,6 @@ export default (state = INITIAL_STATE, action) => {
 
         case CREATE_USER_SUCCESS:
             state = INITIAL_STATE;
-            console.log('CREATE_USER_SUCCESS');
             return {...state, user_created: true};
 
         default:

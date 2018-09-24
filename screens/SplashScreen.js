@@ -6,7 +6,7 @@ import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {AsyncStorage, Image, SafeAreaView} from "react-native";
+import {Image, SafeAreaView, AsyncStorage} from "react-native";
 import {checkAuthToken} from '../actions';
 import AuthScreen from "./AuthScreen";
 import LoginScreen from "./LoginScreen";
@@ -35,8 +35,7 @@ const mainFlow = createBottomTabNavigator({
 class SplashScreen extends Component {
 
     componentWillMount() {
-        this.props.checkFacebookToken();
-        AsyncStorage.removeItem('authenticated')
+        this.props.checkAuthToken();
     }
 
     render() {
@@ -106,4 +105,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {checkFacebookToken: checkAuthToken})(SplashScreen);
+export default connect(mapStateToProps, {checkAuthToken})(SplashScreen);

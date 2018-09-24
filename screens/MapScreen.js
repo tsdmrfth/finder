@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Keyboard, View} from 'react-native';
+import {Animated, Keyboard, View} from 'react-native';
 import {MapView} from 'expo';
 import {connect} from 'react-redux';
 import {fetchJobs} from '../actions';
@@ -7,8 +7,9 @@ import Button from "../components/Button";
 import colors from "../contants/colors";
 import strings from "../contants/strings";
 import Input from "../components/Input";
+import getScreenWidth from "../utils/getScreenWidth";
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = getScreenWidth();
 const INITIAL_MARGIN = (SCREEN_WIDTH - SCREEN_WIDTH * 0.7) / 2;
 
 class MapScreen extends Component {
@@ -20,7 +21,6 @@ class MapScreen extends Component {
             longitudeDelta: 0.04,
             latitudeDelta: 0.09
         },
-        animation: new Animated.Value(INITIAL_MARGIN),
         expanded: false,
     };
 
@@ -34,8 +34,8 @@ class MapScreen extends Component {
         const inputContainerStyle = {
             position: 'absolute',
             top: 50,
-            left: this.searchInputMargin,
-            right: this.searchInputMargin,
+            left: INITIAL_MARGIN,
+            right: INITIAL_MARGIN,
             backgroundColor: colors.searchInputColor + '70',
             height: 50,
             borderWidth: 2,
@@ -50,7 +50,8 @@ class MapScreen extends Component {
             backgroundColor: 'transparent',
             paddingLeft: 15,
             paddingRight: 15,
-            alignSelf: 'stretch'
+            alignSelf: 'stretch',
+            borderWidth: 0
         };
 
         return (
@@ -58,17 +59,7 @@ class MapScreen extends Component {
                 <MapView
                     style={{flex: 1}}
                     region={this.state.region}
-                    onRegionChangeComplete={this.onRegionChangeComplete}>
-
-                    <MapView.Marker
-                        coordinate={{
-                            latitude: this.state.region.latitude,
-                            longitude: this.state.region.longitude
-                        }}
-                        title={'Title'}
-                        description={'Description'}/>
-
-                </MapView>
+                    onRegionChangeComplete={this.onRegionChangeComplete}/>
 
                 <Animated.View style={inputContainerStyle}>
                     <Input
@@ -97,25 +88,6 @@ class MapScreen extends Component {
 
     onSetMyLocationButtonClicked = () => {
     };
-
-    handleOnFocus = () => {
-        this.toggleSearchBar()
-    };
-
-    handleOnBlur = () => {
-        this.toggleSearchBar()
-    };
-
-    toggleSearchBar() {
-        let toValue = this.state.expanded ? INITIAL_MARGIN : 0;
-        console.log(toValue);
-        this.setState({expanded: !this.state.expanded});
-
-        Animated.spring(this.searchInputMargin, {
-            toValue: toValue,
-            duration: 900
-        }).start();
-    }
 
 }
 
