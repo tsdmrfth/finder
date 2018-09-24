@@ -26,7 +26,6 @@ class MapScreen extends Component {
 
     constructor() {
         super();
-        this.searchInputMargin = new Animated.Value(INITIAL_MARGIN);
     }
 
     render(){

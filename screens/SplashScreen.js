@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
-import WelcomeScreen from "./WelcomeScreen";
 import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
-import ReviewScreen from "./ReviewScreen";
 import SettingsScreen from "./SettingsScreen";
-import {Image, SafeAreaView, AsyncStorage} from "react-native";
+import {Image, SafeAreaView} from "react-native";
 import {checkAuthToken} from '../actions';
+import WelcomeScreen from "./WelcomeScreen";
 import AuthScreen from "./AuthScreen";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
+import ReviewScreen from "./ReviewScreen";
+import MainTabBar from "../components/MainTabBar";
 
 /**
  * Created by Fatih Taşdemir on 19.09.2018
@@ -27,8 +28,21 @@ const mainFlow = createBottomTabNavigator({
     }
     },
     {
+        initialRouteName: "map",
         navigationOptions: {
-            tabBarVisible: false
+            tabBarVisible: true,
+            tabBarComponent: props => (
+                <MainTabBar
+                    onMapIconClicked={() => {
+                        props.navigation.navigate('map')
+                    }}
+                    onProfileIconClicked={() => {
+                        props.navigation.navigate('deck')
+                    }}
+                    onSettingIconClicked={() => {
+                        props.navigation.navigate('review')
+                    }}/>
+            )
         }
     });
 
@@ -45,9 +59,10 @@ class SplashScreen extends Component {
             {
                 lazy: true,
                 navigationOptions: {
-                    tabBarVisible: false
+                    tabBarVisible: false,
+
                 }
-            },);
+            });
 
         const UnsignedFlow = createBottomTabNavigator({
                 welcome: {screen: WelcomeScreen},
@@ -74,7 +89,7 @@ class SplashScreen extends Component {
             },
             {
                 navigationOptions: {
-                    tabBarVisible: false,
+                    tabBarVisible: false
                 },
                 lazy: true,
             });
@@ -84,6 +99,7 @@ class SplashScreen extends Component {
         } else if (this.props.hasToken) {
             return <SignedFlow/>
         }
+
 
         return <UnsignedFlow/>
     }

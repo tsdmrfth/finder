@@ -14,11 +14,13 @@ class ClickableIcon extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            this.handleOnPressIn(() => {
-                this.handleOnPressOut()
-            })
-        }, 700)
+        if (this.props.animateOnStart) {
+            setTimeout(() => {
+                this.handleOnPressIn(() => {
+                    this.handleOnPressOut()
+                })
+            }, 700)
+        }
     }
 
     render() {
@@ -41,7 +43,6 @@ class ClickableIcon extends Component {
     handleOnPressIn = (callback) => {
         Animated.spring(this.scale, {
             toValue: 0.4,
-            tension: 3
         }).start();
 
         setTimeout(() => {
@@ -54,17 +55,22 @@ class ClickableIcon extends Component {
 
     handleOnPressOut = () => {
         Animated.spring(this.scale, {
-            toValue: 1.1,
+            toValue: 1,
             tension: 3
         }).start()
     }
 
 }
 
+ClickableIcon.defaultProps = {
+    animateOnStart: true
+};
+
 ClickableIcon.propTypes = {
     onClick: PropTypes.func,
     iconStyle: PropTypes.any,
     iconUri: PropTypes.any,
+    animateOnStart: PropTypes.bool
 };
 
 export default ClickableIcon;
