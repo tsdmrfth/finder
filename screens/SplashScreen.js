@@ -4,7 +4,7 @@ import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
 import MapScreen from "./MapScreen";
 import DeckScreen from "./DeckScreen";
 import SettingsScreen from "./SettingsScreen";
-import {Image, SafeAreaView} from "react-native";
+import {Image, SafeAreaView, AsyncStorage} from "react-native";
 import {checkAuthToken} from '../actions';
 import WelcomeScreen from "./WelcomeScreen";
 import AuthScreen from "./AuthScreen";

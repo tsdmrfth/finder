@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 class MainTabBar extends Component {
 
     render() {
-        const {tabBarContainerStyle, iconStyle, mapIconStyle} = styles;
+        const {tabBarContainerStyle, iconStyle, mapIconStyle, transparentCircleStyle} = styles;
         return (
             <View style={tabBarContainerStyle}>
                 <ClickableIcon
@@ -27,6 +27,7 @@ class MainTabBar extends Component {
                     iconUri={require('../assets/settings_icon.png')} iconStyle={iconStyle}
                     animateOnStart={false}
                     onClick={this.props.onSettingIconClicked}/>
+                <View style={transparentCircleStyle}/>
             </View>
         );
     }
@@ -45,11 +46,23 @@ const styles = {
         },
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        position: 'absolute',
+        zIndex: 1,
+        bottom: 0
     },
     iconStyle: {
         width: 25,
         height: 25
+    },
+    transparentCircleStyle: {
+        backgroundColor: 'transparent',
+        width: 70,
+        height: 70,
+        zIndex:1,
+        borderRadius: 35,
+        position: 'absolute',
+        bottom: 50
     },
     mapIconStyle: {
         width: 60,
@@ -61,7 +74,9 @@ const styles = {
             width: 0.3,
             height: 0.3
         },
-        marginBottom: 50
+        marginBottom: 50,
+        position: 'absolute',
+        zIndex: 2
     }
 };
 
