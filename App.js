@@ -1,21 +1,33 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Provider} from 'react-redux';
+import {store} from "./store";
+import firebase from 'firebase'
+import SplashScreen from "./screens/SplashScreen";
+import firebaseConfig from "./firebase/firebaseConfig";
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
+
+    componentWillMount() {
+        const config = firebaseConfig;
+        firebase.initializeApp(config);
+    }
+
+    render() {
+        return (
+            <Provider store={store}>
+                <View style={styles.containerViewStyle}>
+                    <SplashScreen/>
+                </View>
+            </Provider>
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerViewStyle: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
