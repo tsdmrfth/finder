@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "finder",
+    "description": "This project is really great.",
+    "slug": "finder",
+    "privacy": "public",
+    "sdkVersion": "30.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyBBXIVSRqpcuO-Zw4Mkdt4J9W7v11shhO8"
+      },
+      "bundleIdentifier": "com.mobile.finder",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera.",
+        "NSPhotoLibraryUsageDescription": "This app"
+      }
+    },
+    "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBBXIVSRqpcuO-Zw4Mkdt4J9W7v11shhO8"
+        }
+      }
+    }
+  }
+}
